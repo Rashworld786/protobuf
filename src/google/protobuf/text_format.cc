@@ -3228,6 +3228,10 @@ TextFormat::RedactionState TextFormat::IsOptionSensitive(
                          : reflection->GetEnumValue(opts, option);
       const EnumValueDescriptor* option_value =
           option->enum_type()->FindValueByNumber(enum_val);
+      if (option_value == nullptr) {
+        // Ignore values we don't know about.
+        continue;
+      }
       if (option_value->options().debug_redact()) {
         return TextFormat::RedactionState{true, false};
       }
